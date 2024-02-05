@@ -1,0 +1,23 @@
+version: '3'
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/nginx.dockerfile
+    ports:
+      - "8097:80"
+    networks:
+      - internal
+    volumes:
+      - ./:/var/www/app
+  fpm:
+    build:
+      context: .
+      dockerfile: ./docker/php/fpm.dockerfile
+    volumes:
+      - ./:/var/www/app
+    networks:
+      - internal
+
+networks:
+  internal:
