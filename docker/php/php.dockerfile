@@ -23,12 +23,27 @@ RUN chown www-data:www-data /var/www/.composer
 
 RUN apt-get autoclean && rm -r /var/lib/apt/lists/*
 
-#VOLUME /var/www/.composer
+VOLUME /var/www/.composer
 
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash
 RUN apt-get -y install symfony-cli
+
 RUN mkdir /var/www/.symfony5
-RUN chown -R www-data:www-data /var/www/.symfony5
+RUN chown www-data:www-data /var/www/.symfony5
+# Пока так
+RUN chmod 777 /var/www/.symfony5
+
+VOLUME /var/www/.symfony5
+
+RUN touch /var/www/.gitconfig
+RUN chown www-data:www-data /var/www/.gitconfig
+# Пока так
+RUN chmod 777 /var/www/.gitconfig
+
+RUN git config --global user.email "skulines@mail.ru"
+RUN git config --global user.name "pers1307"
+
+#VOLUME /var/www/.gitconfig
 
 RUN usermod -u 1000 www-data
 USER 1000

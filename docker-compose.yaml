@@ -4,8 +4,8 @@ services:
     build:
       context: ./docker/php
       dockerfile: php.dockerfile
-    #    ports:
-    #      - '127.0.0.1:3306:3306'
+    ports:
+      - '127.0.0.1:80:8000'
     working_dir: '/var/www/app'
     volumes:
       - ./:/var/www/app
