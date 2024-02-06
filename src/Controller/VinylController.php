@@ -13,6 +13,9 @@ class VinylController extends AbstractController
     #[Route('/')]
     public function homepage(): Response
     {
+//        dd(['qwe' => 123]);
+        dump(['qwe' => 123]);
+
         return $this->render('vinyl/homepage.html.twig', [
             'title' => 'Hello yellow',
             'tracks' => [
