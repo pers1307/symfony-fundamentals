@@ -15,7 +15,7 @@ class VinylController extends AbstractController
     public function homepage(Environment $twig): Response
     {
         //        dd(['qwe' => 123]);
-        dump(['qwe' => 123]);
+//        dump(['qwe' => 123]);
 
         $tracks = [
             ['song' => 'Gangsta\'s Paradise', 'artist' => 'Coolio'],
@@ -26,10 +26,10 @@ class VinylController extends AbstractController
             ['song' => 'Fantasy', 'artist' => 'Mariah Carey'],
         ];
 
-        $html = $twig->render('vinyl/homepage.html.twig', [
-            'title' => 'Hello yellow',
-            'tracks' => $tracks,
-        ]);
+//        $html = $twig->render('vinyl/homepage.html.twig', [
+//            'title' => 'Hello yellow',
+//            'tracks' => $tracks,
+//        ]);
         //        dd($html);
 
         return $this->render('vinyl/homepage.html.twig', [
