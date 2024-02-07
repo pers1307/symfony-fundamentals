@@ -29,11 +29,16 @@ RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | b
 RUN apt-get -y install symfony-cli
 
 # Node.js
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt-get -y install nodejs && npm install --global yarn
 
 RUN apt-get autoclean && rm -r /var/lib/apt/lists/*
 RUN mkdir -m 777 -p /var/www/.cache/yarn
+
+RUN touch /var/www/.yarnrc
+RUN chown www-data:www-data /var/www/.yarnrc
+# Пока так
+RUN chmod 777 /var/www/.yarnrc
 
 RUN mkdir /var/www/.symfony5
 RUN chown www-data:www-data /var/www/.symfony5
