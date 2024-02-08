@@ -1,5 +1,5 @@
 {
-    "type": "project",
+    "type": "symfony-fundamentals",
     "license": "proprietary",
     "minimum-stability": "stable",
     "prefer-stable": true,
