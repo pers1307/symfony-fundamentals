@@ -12,14 +12,15 @@ class MixRepository
     public function __construct(
         private HttpClientInterface $httpClient,
         private CacheInterface $cache,
-        private DateTimeFormatter $timeFormatter
+        private DateTimeFormatter $timeFormatter,
+        private bool $isDebug
     ) {
     }
 
     public function findAll(): array
     {
         $mixes = $this->cache->get('mix_data', function (CacheItemInterface $cacheItem) {
-            $cacheItem->expiresAfter(5);
+            $cacheItem->expiresAfter($this->isDebug ? 5 : 60);
             $response = $this->httpClient->request('GET', 'https://raw.githubusercontent.com/SymfonyCasts/vinyl-mixes/main/mixes.json');
             return $response->toArray();
         });
