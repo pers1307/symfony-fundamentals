@@ -24,5 +24,3 @@ services:
       - '${HOME}/mysql8/data:/var/lib/mysql'
     networks:
       - internal
-networks:
-  internal:
