@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Knp\Bundle\TimeBundle\DateTimeFormatter;
 use Psr\Cache\CacheItemInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -13,6 +14,7 @@ class MixRepository
         private HttpClientInterface $httpClient,
         private CacheInterface $cache,
         private DateTimeFormatter $timeFormatter,
+        #[Autowire('%kernel.debug%')]
         private bool $isDebug
     ) {
     }
