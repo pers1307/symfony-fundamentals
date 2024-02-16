@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\VinylMix;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,7 +17,8 @@ class MixController extends AbstractController
         $mix = new VinylMix();
         $mix->setTitle('Do you Remember... Phil Collins?!');
         $mix->setDescription('A pure mix of drummers turned singers!');
-        $mix->setGenre('pop');
+        $genres = ['pop', 'rock'];
+        $mix->setGenre($genres[array_rand($genres)]);
         $mix->setTrackCount(rand(5, 20));
         $mix->setVotes(rand(-50, 50));
 
@@ -24,5 +26,40 @@ class MixController extends AbstractController
         $entityManager->flush();
 
         return new Response(sprintf('Mix %d is %d tracks of pure 80\'s heaven', $mix->getId(), $mix->getTrackCount()));
+    }
+
+    #[Route('/mix/{id}', name: 'app_mix_show')]
+    public function show(VinylMix $mix)
+    {
+        //        $mix = $vinylMixRepository->find($id);
+        //
+        //        if (!$mix) {
+        //            throw $this->createNotFoundException('Mix not found');
+        //        }
+
+        return $this->render('mix/show.html.twig', [
+            'mix' => $mix,
+        ]);
+    }
+
+    #[Route('/mix/{id}/vote', name: 'app_mix_vote')]
+    public function vote(VinylMix $mix, Request $request): Response
+    {
+        $direction = $request->request->get('direction');
+        if ($direction === 'up') {
+            $mix->setVotes($mix->getVotes() + 1);
+        } else {
+            $mix->setVotes($mix->getVotes() - 1);
+        }
+
+        //        $mix = $vinylMixRepository->find($id);
+        //
+        //        if (!$mix) {
+        //            throw $this->createNotFoundException('Mix not found');
+        //        }
+
+        return $this->render('mix/show.html.twig', [
+            'mix' => $mix,
+        ]);
     }
 }
