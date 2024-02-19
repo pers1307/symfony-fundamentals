@@ -28,7 +28,7 @@ class MixController extends AbstractController
         return new Response(sprintf('Mix %d is %d tracks of pure 80\'s heaven', $mix->getId(), $mix->getTrackCount()));
     }
 
-    #[Route('/mix/{id}', name: 'app_mix_show')]
+    #[Route('/mix/{slug}', name: 'app_mix_show')]
     public function show(VinylMix $mix)
     {
         //        $mix = $vinylMixRepository->find($id);
@@ -43,14 +43,21 @@ class MixController extends AbstractController
     }
 
     #[Route('/mix/{id}/vote', name: 'app_mix_vote')]
-    public function vote(VinylMix $mix, Request $request): Response
+    public function vote(VinylMix $mix, Request $request, EntityManagerInterface $entityManager): Response
     {
         $direction = $request->request->get('direction');
         if ($direction === 'up') {
-            $mix->setVotes($mix->getVotes() + 1);
+            $mix->upVote();
         } else {
-            $mix->setVotes($mix->getVotes() - 1);
+            $mix->downVote();
         }
+
+//        $entityManager->persist($mix);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Vote counted!');
+
+        return $this->redirectToRoute('app_mix_show', ['slug' => $mix->getSlug()]);
 
         //        $mix = $vinylMixRepository->find($id);
         //
@@ -58,8 +65,8 @@ class MixController extends AbstractController
         //            throw $this->createNotFoundException('Mix not found');
         //        }
 
-        return $this->render('mix/show.html.twig', [
-            'mix' => $mix,
-        ]);
+//        return $this->render('mix/show.html.twig', [
+//            'mix' => $mix,
+//        ]);
     }
 }
