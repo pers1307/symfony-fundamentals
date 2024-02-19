@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Repository\VinylMixRepository;
 use App\Service\MixRepository;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -36,8 +39,8 @@ class VinylController extends AbstractController
         ]);
     }
 
-    #[Route('/browse/{slug}', name: 'app_browse')]
-    public function browse(VinylMixRepository $vinylMixRepository, string $slug = null): Response
+    #[Route('/browse/{slug}/{page}', name: 'app_browse')]
+    public function browse(VinylMixRepository $vinylMixRepository, Request $request, string $slug = null): Response
     {
         //        dd($this->getParameter('kernel.project_dir'));
         $genre = $slug ? u(str_replace('-', ' ', $slug))->title(true) : null;
@@ -46,12 +49,15 @@ class VinylController extends AbstractController
 
 //        $mixes = $vinylMixRepository->findAll();
 //        $mixes = $vinylMixRepository->findBy(['genre' => $slug], ['votes' => 'DESC']);
-        $mixes = $vinylMixRepository->findAllOrderedByVotes($slug);
+//        $mixes = $vinylMixRepository->findAllOrderedByVotes($slug);
 
+        $queryBuilder = $vinylMixRepository->createQueryBuilder($slug);
+        $adapter = new QueryAdapter($queryBuilder);
+        $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage($adapter, $request->query->get('page', 1), 9);
 
         return $this->render('vinyl/browse.html.twig', [
             'genre' => $genre,
-            'mixes' => $mixes,
+            'pager' => $pagerfanta,
         ]);
     }
 

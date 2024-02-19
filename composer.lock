@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3c79c16fa990228d638accded75af40d",
+    "content-hash": "715beefa1f4295796d6eb3df290e9061",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -1933,6 +1933,50 @@
                 "source": "https://github.com/Pagerfanta/doctrine-orm-adapter/tree/v4.3.1"
             },
             "time": "2024-01-27T17:20:48+00:00"
+        },
+        {
+            "name": "pagerfanta/twig",
+            "version": "v4.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Pagerfanta/twig.git",
+                "reference": "0a372f49d2bdca376f3bbbb1cebacafa7d845765"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Pagerfanta/twig/zipball/0a372f49d2bdca376f3bbbb1cebacafa7d845765",
+                "reference": "0a372f49d2bdca376f3bbbb1cebacafa7d845765",
+                "shasum": ""
+            },
+            "require": {
+                "pagerfanta/core": "^3.7 || ^4.0",
+                "php": "^8.1",
+                "twig/twig": "^2.13 || ^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Pagerfanta\\Twig\\": "./"
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Twig integration for Pagerfanta",
+            "keywords": [
+                "pagerfanta"
+            ],
+            "support": {
+                "source": "https://github.com/Pagerfanta/twig/tree/v4.3.1"
+            },
+            "time": "2023-09-28T23:06:30+00:00"
         },
         {
             "name": "psr/cache",
